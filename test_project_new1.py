@@ -3,6 +3,7 @@ import time
 from select import select
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.ie.options import Options
 
 from selenium.webdriver.support.ui import Select
 
@@ -10,7 +11,15 @@ from selenium.webdriver.support.ui import Select
 
 
 def test_validlogin():
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Remote(
+        command_executor="http://selenium-grid:4444/wd/hub",
+        options=options
+    )
+
     driver.get("https://practicetestautomation.com/practice-test-login/")
     driver.find_element(By.XPATH,'//input[@name="username"]').send_keys("student")
     driver.find_element(By.XPATH,'//input[@name="password"]').send_keys("Password123")

@@ -3,6 +3,7 @@ import time
 from select import select
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 
 from selenium.webdriver.support.ui import Select
 
@@ -30,7 +31,14 @@ from selenium.webdriver.support.ui import Select
 
 
 def test_formsubmission2():
-    driver=webdriver.Chrome()
+    options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Remote(
+        command_executor="http://selenium-grid:4444/wd/hub",
+        options=options
+    )
     driver.get("https://www.techlistic.com/p/selenium-practice-form.html")
     driver.find_element(By.XPATH,'//input[@name="firstname"]').send_keys("Rishitha")
     driver.find_element(By.XPATH,'//input[@name="lastname"]').send_keys("Naga")

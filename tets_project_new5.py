@@ -2,6 +2,7 @@ import time
 
 from select import select
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 from selenium.webdriver.support.ui import Select
@@ -28,7 +29,14 @@ from selenium.webdriver.support.ui import Select
 
 
 def test_extracttabledata():
-    driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+
+    driver = webdriver.Remote(
+        command_executor="http://selenium-grid:4444/wd/hub",
+        options=options
+    )
     driver.get("https://www.techlistic.com/p/demo-selenium-practice.html")
     driver.maximize_window()
     driver.find_element(By.XPATH,'//span[contains(text(),"Demo Webtable 1 (Static Table)")]')
