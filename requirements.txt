@@ -1,0 +1,4 @@
+selenium
+Jenkins
+python
+git

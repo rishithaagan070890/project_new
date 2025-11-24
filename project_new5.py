@@ -6,6 +6,9 @@ from selenium.webdriver.common.by import By
 
 from selenium.webdriver.support.ui import Select
 
+
+
+
 #
 # Open the webpage:
 # 🔗 https://www.techlistic.com/p/demo-selenium-practice.html
@@ -23,14 +26,35 @@ from selenium.webdriver.support.ui import Select
 # ✅ Take a screenshot of the table area and save it (e.g., table_data.png).
 
 
+
 def test_extracttabledata():
-    driver=webdriver.Chrome()
+    driver = webdriver.Chrome()
     driver.get("https://www.techlistic.com/p/demo-selenium-practice.html")
     driver.maximize_window()
     driver.find_element(By.XPATH,'//span[contains(text(),"Demo Webtable 1 (Static Table)")]')
-    table_row=driver.find_elements(By.XPATH,'//table[@id="customers"]/descendant::tr')
-    table_data = driver.find_elements(By.XPATH, '//table[@id="customers"]/descendant::tr/descendant::th')
-    for row in range(0,7):
-        for table_data=driver.find_elements(By.XPATH,'//table[@id="customers"]/descendant::tr[i]/descendant::th')
-        for table_data in table_data:
-            print(table_data.text)
+
+    def get_celldata(row,column):
+        cell_data=driver.find_elements(By.XPATH,f'(//table[@id="customers"]/descendant::tr[{row}]/descendant::span[{column}])')
+        for items in cell_data:
+            print(items.text, end="  ")
+
+    for row in range(1,8):
+       for column in range(1,4):
+           if column==2:
+               continue
+           else:
+               get_celldata(row,column)
+       print()
+
+
+def test_getstructureheight():
+    driver = webdriver.Chrome()
+    driver.get("https://www.techlistic.com/p/demo-selenium-practice.html")
+    driver.maximize_window()
+    driver.find_element(By.CLASS_NAME,"tsc_table_s13")
+    i=0
+    for j in range(1, 5):
+        height = driver.find_element(By.XPATH, f'//table[@class="tsc_table_s13"]/descendant::tr/descendant::td[4*{j}+{i}]')
+
+        print(i,(height.text))
+        i+=2
