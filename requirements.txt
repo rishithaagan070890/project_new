@@ -1,4 +1,3 @@
 selenium
-Jenkins
-python
-git
+pytest
+
