@@ -16,7 +16,7 @@ def test_validlogin():
     options.add_argument("--disable-dev-shm-usage")
 
     driver = webdriver.Remote(
-        command_executor="http://selenium-grid:4444/wd/hub",
+        command_executor="http://selenium-hub:4444/wd/hub",
         options=options
     )
 
